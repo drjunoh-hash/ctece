@@ -77,4 +77,4 @@ export interface StoredAssessmentResult {
   details: AssessmentDetail[]; // 상세 결과 배열
 }
 
-export type AppState = 'WELCOME' | 'LOADING' | 'QUIZ' | 'RESULTS' | 'BUILDER';
+export type AppState = 'WELCOME' | 'LOADING' | 'QUIZ' | 'RESULTS' | 'BUILDER' | 'DRAWING';

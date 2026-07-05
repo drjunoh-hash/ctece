@@ -4,6 +4,7 @@ import WelcomeScreen from './components/WelcomeScreen';
 import QuizScreen from './components/QuizScreen';
 import ResultScreen from './components/ResultScreen';
 import QuestionBuilder from './components/QuestionBuilder';
+import DrawingBoard from './components/DrawingBoard';
 // Removed AI service import
 import { AppState, UserProfile, Question, CTCategory, StoredAssessmentResult, QuizResponse, AssessmentDetail } from './types';
 import { appendAssessmentResult, SHEETS_SCOPE } from './services/googleSheetService';
@@ -237,6 +238,14 @@ const App: React.FC = () => {
     setAppState('WELCOME');
   };
 
+  const handleEnterDrawing = () => {
+    setAppState('DRAWING');
+  };
+
+  const handleExitDrawing = () => {
+    setAppState('WELCOME');
+  };
+
   return (
     <div className="min-h-screen bg-blue-50 flex flex-col font-sans">
       <Header />
@@ -264,6 +273,10 @@ const App: React.FC = () => {
           />
         )}
 
+        {appState === 'DRAWING' && (
+          <DrawingBoard onHome={handleExitDrawing} />
+        )}
+
         {appState === 'QUIZ' && questions.length > 0 && (
           <QuizScreen 
             questions={questions} 
@@ -282,6 +295,18 @@ const App: React.FC = () => {
         )}
 
       </main>
+
+      {/* 그림판 바로가기 (환영 화면에서만 표시) */}
+      {appState === 'WELCOME' && (
+        <button
+          onClick={handleEnterDrawing}
+          className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold text-lg md:text-xl px-5 py-3 md:px-7 md:py-4 rounded-full shadow-xl border-b-4 border-pink-700 active:border-b-0 active:translate-y-1 transition-all fun-font"
+          aria-label="그림판 열기"
+        >
+          <span className="text-2xl md:text-3xl">🎨</span>
+          그림 그리기
+        </button>
+      )}
 
       <footer className="p-4 text-center text-slate-400 text-sm">
         <p>&copy; {new Date().getFullYear()} Computational Thinking Assessment.</p>
